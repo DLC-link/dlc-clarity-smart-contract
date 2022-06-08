@@ -44,7 +44,7 @@ export const mnemonic = '';
 
 `privateKey`: your private key corresponds to the public key
 
-`mnemonic`: your menomic seed phrase, as a single space-delimited string
+`mnemonic`: your menomic seed phrase, as a single string with single-spaces between phrase words
 
 ## Tests
 Run
