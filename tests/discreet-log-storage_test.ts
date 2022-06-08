@@ -1,4 +1,4 @@
-import { Clarinet, Tx, Chain, Account, types } from 'https://deno.land/x/clarinet@v0.28.0/index.ts';
+import { Clarinet, Tx, Chain, Account, types } from 'https://deno.land/x/clarinet@v0.31.1/index.ts';
 import { assertEquals, assertStringIncludes } from 'https://deno.land/std@0.90.0/testing/asserts.ts';
 
 //NOTE: the get-block-info-time alway returns u0 so the closing-time is set according to that in the tests
@@ -44,7 +44,7 @@ Clarinet.test({
 
         let block = chain.mineBlock([
             Tx.contractCall(contractName, "open-new-dlc", [types.buff(UUID), types.buff(BTChex), types.uint(10), types.uint(10), types.principal(wallet_1.address)], deployer.address),
-            Tx.contractCall(contractName, "get-dlc",[types.buff(UUID)] , deployer.address)
+            Tx.contractCall(contractName, "get-dlc", [types.buff(UUID)], deployer.address)
         ]);
 
         block.receipts[0].result.expectOk().expectBool(true);
@@ -56,7 +56,7 @@ Clarinet.test({
         assertEquals(event.nft_mint_event.recipient.split(".")[1], contractName);
 
         const dlc = block.receipts[1].result.expectSome().expectTuple();
-        
+
         assertEquals(hex2ascii(dlc.asset), "BTC");
         assertEquals(hex2ascii(dlc.uuid), "fakeuuid");
         assertEquals(dlc.status, "none");
@@ -103,7 +103,7 @@ Clarinet.test({
         let block = chain.mineBlock([
             Tx.contractCall(contractName, "open-new-dlc", [types.buff(UUID), types.buff(BTChex), types.uint(0), types.uint(0), types.principal(wallet_1.address)], deployer.address),
             Tx.contractCall(contractName, "close-dlc", [types.buff(UUID)], wallet_1.address),
-            Tx.contractCall(contractName, "get-dlc",[types.buff(UUID)] , deployer.address)
+            Tx.contractCall(contractName, "get-dlc", [types.buff(UUID)], deployer.address)
         ]);
 
         block.receipts[0].result.expectOk().expectBool(true);
@@ -119,7 +119,7 @@ Clarinet.test({
 
         block.receipts[1].result.expectOk().expectBool(true);
         const burnEvent = block.receipts[1].events[0];
-        
+
         assertEquals(typeof burnEvent, 'object');
         assertEquals(burnEvent.type, 'nft_burn_event');
         assertEquals(burnEvent.nft_burn_event.asset_identifier.split("::")[1], nftAssetContract);
@@ -133,11 +133,11 @@ Clarinet.test({
     async fn(chain: Chain, accounts: Map<string, Account>) {
         const deployer = accounts.get('deployer')!;
         const wallet_1 = accounts.get('wallet_1')!;
-        
+
         let block = chain.mineBlock([
             Tx.contractCall(contractName, "open-new-dlc", [types.buff(UUID), types.buff(BTChex), types.uint(5), types.uint(0), types.principal(wallet_1.address)], deployer.address),
             Tx.contractCall(contractName, "early-close-dlc", [types.buff(UUID)], wallet_1.address),
-            Tx.contractCall(contractName, "get-dlc",[types.buff(UUID)] , deployer.address)
+            Tx.contractCall(contractName, "get-dlc", [types.buff(UUID)], deployer.address)
         ]);
 
         block.receipts[0].result.expectOk().expectBool(true);
@@ -153,7 +153,7 @@ Clarinet.test({
 
         block.receipts[1].result.expectOk().expectBool(true);
         const burnEvent = block.receipts[1].events[0];
-        
+
         assertEquals(typeof burnEvent, 'object');
         assertEquals(burnEvent.type, 'nft_burn_event');
         assertEquals(burnEvent.nft_burn_event.asset_identifier.split("::")[1], nftAssetContract);
