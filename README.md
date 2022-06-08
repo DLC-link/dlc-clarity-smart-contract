@@ -31,7 +31,9 @@ We are happy to have support and contribution from the community. Please find us
 ## Setup
 For reference, a sample of this deployed contract can be found here: [DLC-Manager](https://explorer.stacks.co/txid/0x4bc611b40fc13e31062d4c1ff7978a71c59da4cbec958a015ef5c2976b97d03d?chain=testnet)
 
-Add `secrets.js` file with the following fields:
+Add `secrets.js` file with the following lines, filling in your private data. 
+
+If you fill in your mnemonic phrase only, you can use the `pk-extractor.js` script to print your private and public key values.
 
 ```js
 export const publicKey = '';
@@ -40,9 +42,9 @@ export const mnemonic = '';
 ```
 `publicKey`: your wallet public key
 
-`privateKey`: your private key corresponds to the public key (can be extracted with pk-extractor.js)
+`privateKey`: your private key corresponds to the public key
 
-`mnemonic`: your menomic seed phrase
+`mnemonic`: your menomic seed phrase, as a single space-delimited string
 
 ## Tests
 Run
