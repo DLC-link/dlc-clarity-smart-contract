@@ -95,6 +95,42 @@ Clarinet.test({
 });
 
 Clarinet.test({
+    name: "close-dlc emits an event",
+    async fn(chain: Chain, accounts: Map<string, Account>) {
+        const deployer = accounts.get('deployer')!;
+        const wallet_1 = accounts.get('wallet_1')!;
+
+        let block = chain.mineBlock([
+            Tx.contractCall(contractName, "open-new-dlc", [types.buff(UUID), types.buff(BTChex), types.uint(0), types.uint(0), types.principal(wallet_1.address)], deployer.address),
+            Tx.contractCall(contractName, "close-dlc", [types.buff(UUID), types.bool(true)], wallet_1.address)
+        ]);
+
+
+        block.receipts[0].result.expectOk().expectBool(true);
+        const mintEvent = block.receipts[0].events[0];
+
+        assertEquals(typeof mintEvent, 'object');
+        assertEquals(mintEvent.type, 'nft_mint_event');
+        assertEquals(mintEvent.nft_mint_event.asset_identifier.split("::")[1], nftAssetContract);
+        assertEquals(mintEvent.nft_mint_event.recipient.split(".")[1], contractName);
+
+        block.receipts[1].result.expectOk().expectBool(true);
+        const printEvent = block.receipts[1].events[0];
+
+        assertEquals(typeof printEvent, 'object');
+        assertEquals(printEvent.type, 'contract_event');
+        assertEquals(printEvent.contract_event.topic, "print");
+        assertStringIncludes(printEvent.contract_event.value, "outcome: true, uuid: 0x66616b6575756964")
+
+        const burnEvent = block.receipts[1].events[1];
+        assertEquals(typeof burnEvent, 'object');
+        assertEquals(burnEvent.type, 'nft_burn_event');
+        assertEquals(burnEvent.nft_burn_event.asset_identifier.split("::")[1], nftAssetContract);
+        assertEquals(burnEvent.nft_burn_event.sender.split(".")[1], contractName);
+    },
+});
+
+Clarinet.test({
     name: "close-dlc updates status and actual-closing-time and burns the corresponding nft",
     async fn(chain: Chain, accounts: Map<string, Account>) {
         const deployer = accounts.get('deployer')!;
@@ -118,7 +154,14 @@ Clarinet.test({
         assertEquals(dlc.status, "(some u1)")
 
         block.receipts[1].result.expectOk().expectBool(true);
-        const burnEvent = block.receipts[1].events[0];
+        const printEvent = block.receipts[1].events[0];
+
+        assertEquals(typeof printEvent, 'object');
+        assertEquals(printEvent.type, 'contract_event');
+        assertEquals(printEvent.contract_event.topic, "print");
+        assertStringIncludes(printEvent.contract_event.value, "outcome: true, uuid: 0x66616b6575756964")
+
+        const burnEvent = block.receipts[1].events[1];
 
         assertEquals(typeof burnEvent, 'object');
         assertEquals(burnEvent.type, 'nft_burn_event');
@@ -152,7 +195,14 @@ Clarinet.test({
         assertEquals(dlc.status, "(some u0)") // indication of early close
 
         block.receipts[1].result.expectOk().expectBool(true);
-        const burnEvent = block.receipts[1].events[0];
+        const printEvent = block.receipts[1].events[0];
+
+        assertEquals(typeof printEvent, 'object');
+        assertEquals(printEvent.type, 'contract_event');
+        assertEquals(printEvent.contract_event.topic, "print");
+        assertStringIncludes(printEvent.contract_event.value, "outcome: true, uuid: 0x66616b6575756964")
+
+        const burnEvent = block.receipts[1].events[1];
 
         assertEquals(typeof burnEvent, 'object');
         assertEquals(burnEvent.type, 'nft_burn_event');
