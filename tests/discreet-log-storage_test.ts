@@ -48,12 +48,20 @@ Clarinet.test({
         ]);
 
         block.receipts[0].result.expectOk().expectBool(true);
-        const event = block.receipts[0].events[0];
+        const printEvent = block.receipts[0].events[0];
 
-        assertEquals(typeof event, 'object');
-        assertEquals(event.type, 'nft_mint_event');
-        assertEquals(event.nft_mint_event.asset_identifier.split("::")[1], nftAssetContract);
-        assertEquals(event.nft_mint_event.recipient.split(".")[1], contractName);
+
+        assertEquals(typeof printEvent, 'object');
+        assertEquals(printEvent.type, 'contract_event');
+        assertEquals(printEvent.contract_event.topic, "print");
+        assertStringIncludes(printEvent.contract_event.value, "asset: 0x425443, closing-time: u10, creator: ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5, emergency-refund-time: u10, uuid: 0x66616b6575756964")
+
+        const mintEvent = block.receipts[0].events[1];
+
+        assertEquals(typeof mintEvent, 'object');
+        assertEquals(mintEvent.type, 'nft_mint_event');
+        assertEquals(mintEvent.nft_mint_event.asset_identifier.split("::")[1], nftAssetContract);
+        assertEquals(mintEvent.nft_mint_event.recipient.split(".")[1], contractName);
 
         const dlc = block.receipts[1].result.expectSome().expectTuple();
 
@@ -107,7 +115,14 @@ Clarinet.test({
 
 
         block.receipts[0].result.expectOk().expectBool(true);
-        const mintEvent = block.receipts[0].events[0];
+        const printEvent = block.receipts[0].events[0];
+
+        assertEquals(typeof printEvent, 'object');
+        assertEquals(printEvent.type, 'contract_event');
+        assertEquals(printEvent.contract_event.topic, "print");
+        assertStringIncludes(printEvent.contract_event.value, "asset: 0x425443, closing-time: u0, creator: ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5, emergency-refund-time: u0, uuid: 0x66616b6575756964")
+
+        const mintEvent = block.receipts[0].events[1];
 
         assertEquals(typeof mintEvent, 'object');
         assertEquals(mintEvent.type, 'nft_mint_event');
@@ -115,12 +130,12 @@ Clarinet.test({
         assertEquals(mintEvent.nft_mint_event.recipient.split(".")[1], contractName);
 
         block.receipts[1].result.expectOk().expectBool(true);
-        const printEvent = block.receipts[1].events[0];
+        const printEvent2 = block.receipts[1].events[0];
 
-        assertEquals(typeof printEvent, 'object');
-        assertEquals(printEvent.type, 'contract_event');
-        assertEquals(printEvent.contract_event.topic, "print");
-        assertStringIncludes(printEvent.contract_event.value, "outcome: true, uuid: 0x66616b6575756964")
+        assertEquals(typeof printEvent2, 'object');
+        assertEquals(printEvent2.type, 'contract_event');
+        assertEquals(printEvent2.contract_event.topic, "print");
+        assertStringIncludes(printEvent2.contract_event.value, "outcome: true, uuid: 0x66616b6575756964")
 
         const burnEvent = block.receipts[1].events[1];
         assertEquals(typeof burnEvent, 'object');
@@ -143,7 +158,14 @@ Clarinet.test({
         ]);
 
         block.receipts[0].result.expectOk().expectBool(true);
-        const mintEvent = block.receipts[0].events[0];
+        const printEvent = block.receipts[0].events[0];
+
+        assertEquals(typeof printEvent, 'object');
+        assertEquals(printEvent.type, 'contract_event');
+        assertEquals(printEvent.contract_event.topic, "print");
+        assertStringIncludes(printEvent.contract_event.value, "asset: 0x425443, closing-time: u0, creator: ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5, emergency-refund-time: u0, uuid: 0x66616b6575756964")
+
+        const mintEvent = block.receipts[0].events[1];
 
         assertEquals(typeof mintEvent, 'object');
         assertEquals(mintEvent.type, 'nft_mint_event');
@@ -154,12 +176,12 @@ Clarinet.test({
         assertEquals(dlc.status, "(some u1)")
 
         block.receipts[1].result.expectOk().expectBool(true);
-        const printEvent = block.receipts[1].events[0];
+        const printEvent2 = block.receipts[1].events[0];
 
-        assertEquals(typeof printEvent, 'object');
-        assertEquals(printEvent.type, 'contract_event');
-        assertEquals(printEvent.contract_event.topic, "print");
-        assertStringIncludes(printEvent.contract_event.value, "outcome: true, uuid: 0x66616b6575756964")
+        assertEquals(typeof printEvent2, 'object');
+        assertEquals(printEvent2.type, 'contract_event');
+        assertEquals(printEvent2.contract_event.topic, "print");
+        assertStringIncludes(printEvent2.contract_event.value, "outcome: true, uuid: 0x66616b6575756964")
 
         const burnEvent = block.receipts[1].events[1];
 
@@ -184,7 +206,14 @@ Clarinet.test({
         ]);
 
         block.receipts[0].result.expectOk().expectBool(true);
-        const mintEvent = block.receipts[0].events[0];
+        const printEvent = block.receipts[0].events[0];
+
+        assertEquals(typeof printEvent, 'object');
+        assertEquals(printEvent.type, 'contract_event');
+        assertEquals(printEvent.contract_event.topic, "print");
+        assertStringIncludes(printEvent.contract_event.value, "asset: 0x425443, closing-time: u5, creator: ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5, emergency-refund-time: u0, uuid: 0x66616b6575756964")
+
+        const mintEvent = block.receipts[0].events[1];
 
         assertEquals(typeof mintEvent, 'object');
         assertEquals(mintEvent.type, 'nft_mint_event');
@@ -195,12 +224,12 @@ Clarinet.test({
         assertEquals(dlc.status, "(some u0)") // indication of early close
 
         block.receipts[1].result.expectOk().expectBool(true);
-        const printEvent = block.receipts[1].events[0];
+        const printEvent2 = block.receipts[1].events[0];
 
-        assertEquals(typeof printEvent, 'object');
-        assertEquals(printEvent.type, 'contract_event');
-        assertEquals(printEvent.contract_event.topic, "print");
-        assertStringIncludes(printEvent.contract_event.value, "outcome: true, uuid: 0x66616b6575756964")
+        assertEquals(typeof printEvent2, 'object');
+        assertEquals(printEvent2.type, 'contract_event');
+        assertEquals(printEvent2.contract_event.topic, "print");
+        assertStringIncludes(printEvent2.contract_event.value, "outcome: true, uuid: 0x66616b6575756964")
 
         const burnEvent = block.receipts[1].events[1];
 
