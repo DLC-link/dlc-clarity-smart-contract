@@ -1,4 +1,4 @@
-import {network, senderAddress, senderKey, contractAddress, contractName} from './common.js'
+import {network, senderAddress, senderKey, contractAddress, contractName, UUID} from './common.js'
 
 import {
   makeContractCall,
@@ -15,9 +15,10 @@ const txOptions = {
   contractName: contractName,
   functionName: functionName,
   functionArgs: [
+    bufferCVFromString(UUID),
     bufferCVFromString("BTC"),                 // asset
-    uintCV(1651243090),                        // closing-time
-    uintCV(1651243090),                        // emergency-refund-time
+    uintCV(1655911615),                        // closing-time
+    uintCV(1655911615),                        // emergency-refund-time
   ],
   senderKey: senderKey,
   validateWithAbi: true,

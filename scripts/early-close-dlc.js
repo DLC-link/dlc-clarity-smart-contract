@@ -7,6 +7,7 @@ import {
   bufferCVFromString,
   createAssetInfo,
   makeContractNonFungiblePostCondition,
+  trueCV
 } from "@stacks/transactions";
 
 const functionName = "early-close-dlc";
@@ -30,6 +31,7 @@ const txOptions = {
   functionName: functionName,
   functionArgs: [
     bufferCVFromString(UUID),
+    trueCV()
   ],
   postConditions: [contractNonFungiblePostCondition],
   senderKey: senderKey,

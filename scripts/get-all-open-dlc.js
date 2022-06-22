@@ -1,7 +1,9 @@
 import fetch from "node-fetch";
 
-const principal = "ST31H4TTX6TVMEE86TYV6PN6XPQ6J7NCS2DD0XFW0.discreet-log-storage"
-const asset_identifiers = "ST31H4TTX6TVMEE86TYV6PN6XPQ6J7NCS2DD0XFW0.discreet-log-storage::open-dlc"
+import {network, senderAddress, senderKey, contractAddress, contractName, assetName, UUID} from './common.js'
+
+const principal = contractAddress + '.' + contractName;
+const asset_identifiers = principal + "::open-dlc";
 
 const URLAPI = `https://stacks-node-api.testnet.stacks.co/extended/v1/tokens/nft/holdings?asset_identifiers=${asset_identifiers}&principal=${principal}`;
 let data;

@@ -17,9 +17,9 @@ const txOptions = {
   functionArgs: [
     bufferCVFromString(UUID),                                  // uuid
     bufferCVFromString("BTC"),                                       // asset
-    uintCV(1651830015),                                              // closing-time
-    uintCV(1651830015),                                              // emergency-refund-time
-    standardPrincipalCV("STWYKHG01H1RPXB4Z74SM3CMGB3SGCWVYV9YEHHZ"), // creator
+    uintCV(1655911615),                                              // closing-time
+    uintCV(1655911615),                                              // emergency-refund-time
+    standardPrincipalCV("ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"), // creator
   ],
   senderKey: senderKey,
   validateWithAbi: true,
