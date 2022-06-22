@@ -22,7 +22,7 @@ Clarinet.test({
         const deployer = accounts.get('deployer')!;
 
         let block = chain.mineBlock([
-            Tx.contractCall(contractName, "create-dlc", [types.buff(BTChex), types.uint(10), types.uint(10)], deployer.address)
+            Tx.contractCall(contractName, "create-dlc", [types.buff(UUID), types.buff(BTChex), types.uint(10), types.uint(10)], deployer.address)
         ]);
 
         block.receipts[0].result.expectOk().expectBool(true);
