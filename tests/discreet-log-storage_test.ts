@@ -102,7 +102,7 @@ Clarinet.test({
 
         let block = chain.mineBlock([
             Tx.contractCall(contractName, "open-new-dlc", [types.buff(UUID), types.buff(BTChex), types.uint(0), types.uint(0), types.principal(wallet_1.address)], deployer.address),
-            Tx.contractCall(contractName, "close-dlc", [types.buff(UUID)], wallet_1.address),
+            Tx.contractCall(contractName, "close-dlc", [types.buff(UUID), types.bool(true)], wallet_1.address),
             Tx.contractCall(contractName, "get-dlc", [types.buff(UUID)], deployer.address)
         ]);
 
@@ -136,7 +136,7 @@ Clarinet.test({
 
         let block = chain.mineBlock([
             Tx.contractCall(contractName, "open-new-dlc", [types.buff(UUID), types.buff(BTChex), types.uint(5), types.uint(0), types.principal(wallet_1.address)], deployer.address),
-            Tx.contractCall(contractName, "early-close-dlc", [types.buff(UUID)], wallet_1.address),
+            Tx.contractCall(contractName, "early-close-dlc", [types.buff(UUID), types.bool(true)], wallet_1.address),
             Tx.contractCall(contractName, "get-dlc", [types.buff(UUID)], deployer.address)
         ]);
 
@@ -169,8 +169,8 @@ Clarinet.test({
 
         let block = chain.mineBlock([
             Tx.contractCall(contractName, "open-new-dlc", [types.buff(UUID), types.buff(BTChex), types.uint(0), types.uint(0), types.principal(wallet_1.address)], deployer.address),
-            Tx.contractCall(contractName, "close-dlc", [types.buff(UUID)], wallet_1.address),
-            Tx.contractCall(contractName, "close-dlc", [types.buff(UUID)], wallet_1.address),
+            Tx.contractCall(contractName, "close-dlc", [types.buff(UUID), types.bool(true)], wallet_1.address),
+            Tx.contractCall(contractName, "close-dlc", [types.buff(UUID), types.bool(true)], wallet_1.address),
         ]);
 
         const err = block.receipts[2].result.expectErr();
@@ -186,8 +186,8 @@ Clarinet.test({
 
         let block = chain.mineBlock([
             Tx.contractCall(contractName, "open-new-dlc", [types.buff(UUID), types.buff(BTChex), types.uint(5), types.uint(0), types.principal(wallet_1.address)], deployer.address),
-            Tx.contractCall(contractName, "early-close-dlc", [types.buff(UUID)], wallet_1.address),
-            Tx.contractCall(contractName, "early-close-dlc", [types.buff(UUID)], wallet_1.address),
+            Tx.contractCall(contractName, "early-close-dlc", [types.buff(UUID), types.bool(true)], wallet_1.address),
+            Tx.contractCall(contractName, "early-close-dlc", [types.buff(UUID), types.bool(true)], wallet_1.address),
         ]);
 
         const err = block.receipts[2].result.expectErr();
@@ -204,7 +204,7 @@ Clarinet.test({
 
         let block = chain.mineBlock([
             Tx.contractCall(contractName, "open-new-dlc", [types.buff(UUID), types.buff(BTChex), types.uint(0), types.uint(0), types.principal(wallet_1.address)], deployer.address),
-            Tx.contractCall(contractName, "close-dlc", [types.buff(UUID)], wallet_2.address),
+            Tx.contractCall(contractName, "close-dlc", [types.buff(UUID), types.bool(true)], wallet_2.address),
         ]);
 
         const err = block.receipts[1].result.expectErr();
@@ -213,7 +213,7 @@ Clarinet.test({
 });
 
 Clarinet.test({
-    name: "only authorized wallets can eraly close dlc",
+    name: "only authorized wallets can early close dlc",
     async fn(chain: Chain, accounts: Map<string, Account>) {
         const deployer = accounts.get('deployer')!;
         const wallet_1 = accounts.get('wallet_1')!;
@@ -221,7 +221,7 @@ Clarinet.test({
 
         let block = chain.mineBlock([
             Tx.contractCall(contractName, "open-new-dlc", [types.buff(UUID), types.buff(BTChex), types.uint(5), types.uint(0), types.principal(wallet_1.address)], deployer.address),
-            Tx.contractCall(contractName, "early-close-dlc", [types.buff(UUID)], wallet_2.address),
+            Tx.contractCall(contractName, "early-close-dlc", [types.buff(UUID), types.bool(true)], wallet_2.address),
         ]);
 
         const err = block.receipts[1].result.expectErr();
@@ -254,7 +254,7 @@ Clarinet.test({
 
         let block = chain.mineBlock([
             Tx.contractCall(contractName, "open-new-dlc", [types.buff(UUID), types.buff(BTChex), types.uint(0), types.uint(0), types.principal(wallet_1.address)], deployer.address),
-            Tx.contractCall(contractName, "close-dlc", [types.buff(UUID)], wallet_1.address),
+            Tx.contractCall(contractName, "close-dlc", [types.buff(UUID), types.bool(true)], wallet_1.address),
             Tx.contractCall(contractName, "dlc-status", [types.buff(UUID)], wallet_1.address),
         ]);
 
