@@ -1,4 +1,4 @@
-import {network, senderAddress, senderKey, contractAddress, contractName, UUID} from './common.js'
+import { network, senderAddress, senderKey, contractAddress, contractName } from './common.js'
 
 import {
   makeContractCall,
@@ -28,9 +28,6 @@ const txOptions = {
 };
 
 const transaction = await makeContractCall(txOptions);
-console.log(transaction);
+console.log("makeContractCall Response: ", transaction);
 const broadcastResponse = await broadcastTransaction(transaction, network);
-console.log("2: ", broadcastResponse);
-
-// You can check the call status on https://explorer.stacks.co/?chain=testnet
-console.log("txid:", broadcastResponse.txid);
+console.log("\nYou can check the call status on https://explorer.stacks.co/?chain=testnet\nbroadcastTransaction: ", broadcastResponse);

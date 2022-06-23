@@ -9,7 +9,7 @@ export const network = isProd ? new StacksTestnet() : new StacksMocknet();
 
 export const senderAddress = secrets.publicKey;
 export const senderKey = secrets.privateKey;
-export const assetName = 'open-dlc';
+export const assetName = 'open-dlc'; // I don't think this is being used, but it should be something like 'BTC'
 
 export const contractAddress = isProd ? "ST12S2DB1PKRM1BJ1G5BQS0AB0QPKHRVHWXDBJ27R" : "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
 export const contractName = "discreet-log-storage-v2";
