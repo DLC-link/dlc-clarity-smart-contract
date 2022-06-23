@@ -1,3 +1,4 @@
+import {network, senderAddress, senderKey, contractAddress, contractName, assetName, UUID} from './common.js'
 // once you started the script run the create-dlc script which will emit a print event
 
 import { connectWebSocketClient } from '@stacks/blockchain-api-client';
@@ -14,7 +15,7 @@ function setTx(_tx) {
 
 const client = await connectWebSocketClient('wss://stacks-node-api.testnet.stacks.co/');
 
-const sub = await client.subscribeAddressTransactions('ST31H4TTX6TVMEE86TYV6PN6XPQ6J7NCS2DD0XFW0.discreet-log-storage', function (transactionInfo) {
+const sub = await client.subscribeAddressTransactions(contractAddress + '.' + contractName, function (transactionInfo) {
     if (transactionInfo.tx_status == "success") {
         const tx = fetchTxAndExtractPrintEvent(transactionInfo.tx_id);
     } else {

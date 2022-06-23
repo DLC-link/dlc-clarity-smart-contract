@@ -6,7 +6,8 @@ import {
   bufferCVFromString,
   createAssetInfo,
   makeContractNonFungiblePostCondition,
-  AnchorMode
+  AnchorMode,
+  trueCV
 } from "@stacks/transactions";
 
 const functionName = "close-dlc";
@@ -30,6 +31,7 @@ const txOptions = {
   functionName: functionName,
   functionArgs: [
     bufferCVFromString(UUID),
+    trueCV()                  // or falseCV()
   ],
   postConditions: [contractNonFungiblePostCondition],
   senderKey: senderKey,
